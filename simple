@@ -1,0 +1,76 @@
+class Task:
+    def __init__(self, task_id, description, due_date):
+        self.task_id = task_id
+        self.description = description
+        self.due_date = due_date
+        self.completed = False
+
+    def complete_task(self):
+        self.completed = True
+
+    def display_info(self):
+        status = "Completed" if self.completed else "Not Completed"
+        print(f"Task ID: {self.task_id}")
+        print(f"Description: {self.description}")
+        print(f"Due Date: {self.due_date}")
+        print(f"Status: {status}")
+
+class TaskManager:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append(task)
+        print("Task added.")
+
+    def complete_task(self, task_id):
+        for task in self.tasks:
+            if task.task_id == task_id:
+                task.complete_task()
+                print("Task marked as completed.")
+                return
+        print("Task not found.")
+
+    def view_tasks(self):
+        if not self.tasks:
+            print("No tasks in the task manager.")
+        else:
+            print("=== Task List ===")
+            for task in self.tasks:
+                task.display_info()
+
+def main():
+    task_manager = TaskManager()
+
+    while True:
+        print("\n===== Task Management System =====")
+        print("1. Add Task")
+        print("2. Complete Task")
+        print("3. View Task List")
+        print("4. Exit")
+
+        choice = input("Enter your choice (1-4): ")
+
+        if choice == "1":
+            task_id = input("Enter task ID: ")
+            description = input("Enter task description: ")
+            due_date = input("Enter task due date: ")
+            task = Task(task_id, description, due_date)
+            task_manager.add_task(task)
+
+        elif choice == "2":
+            task_id = input("Enter task ID to mark as completed: ")
+            task_manager.complete_task(task_id)
+
+        elif choice == "3":
+            task_manager.view_tasks()
+
+        elif choice == "4":
+            print("Thank you for using the Task Management System.")
+            break
+
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
